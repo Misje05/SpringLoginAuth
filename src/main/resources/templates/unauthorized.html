@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .alert-container {
+            background: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .alert {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #ffeaa7;
+            margin-bottom: 20px;
+        }
+        .alert h2 {
+            margin-top: 0;
+            color: #d39e00;
+        }
+        .alert p {
+            margin: 10px 0;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-container">
+        <div class="alert">
+            <h2>⚠ Oops!</h2>
+            <p>Du må logge inn for å få tilgang til denne siden.</p>
+        </div>
+        <a href="/login">Gå til innlogging</a>
+    </div>
+</body>
+</html>

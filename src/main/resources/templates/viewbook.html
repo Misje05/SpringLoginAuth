@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>View Book Page</title>
+</head>
+<body>
+	<div>
+		<a href="/">Home</a>
+	</div>
+	<div>
+		<table cellpadding="10">
+			<tr>
+				<td width="100px">ISBN:</td>
+				<td><b margin-left="15px" th:text="${book.isbn}" /></td>
+			</tr>
+			<tr>
+				<td>Title:</td>
+				<td><b th:text="${book.title}" /></td>
+			</tr>
+			<tr th:each="author : ${book.authors}">
+				<td>Authors:</td>
+				<td th:text="${author.firstname} + ' ' + ${author.lastname}"></td>				
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

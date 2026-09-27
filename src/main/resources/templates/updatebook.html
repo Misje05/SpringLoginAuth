@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Update Book</title>
+</head>
+<body>
+	<div>
+		<a href="/">Home</a>
+	</div>
+	<div>
+		<form th:action="@{/updatebook}" method="post" enctype="multipart/form-data">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<table cellpadding="10">
+				<tr>
+					<td width="100px">ISBN:</td>
+					<td><input name="isbn" th:value="${book.isbn}" /></td>
+				</tr>
+				<tr>
+					<td>Title:</td>
+					<td><input name="title" th:value="${book.title}" /></td>
+				</tr>
+				<tr th:each="authoro : ${book.authors}">
+					<td>Author:</td>
+					<td>
+						<select id="authorid" name="authorid">
+							<option th:each="author : ${authors}" 
+								th:value="${author.authorId}" 
+								th:text="${author.firstname} + ' ' + ${author.lastname}"
+								th:selected="${author.authorId} == ${authoro.authorId}">
+							</option>
+						</select>
+					</td>			
+				</tr>
+			</table>
+			<br>
+			<div>
+				<input name="id" type="hidden" th:value="${book.id}" /></td>
+				<input th:type="submit" value="Submit" name="submit">
+			</div>
+		</form>
+</div>
+</body>
+</html>

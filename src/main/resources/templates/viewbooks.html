@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View All Books</title>
+</head>
+<body>
+	<div>
+		<a href="/">Home</a>
+	</div>
+	<div th:if="${not #lists.isEmpty(books)}">
+		<table border=1 class="">
+			<tr>
+				<th>ISBN</th>
+				<th>Title</th>
+			</tr>
+			<tr th:each="book : ${books}">
+				<td th:text="${book.isbn}"></td>
+				<td th:text="${book.title}"></td>
+				<td>
+					<a th:href="@{'/viewbook?id='+${book.id}}">view</a>
+				</td>
+				<td>
+					<a th:href="@{'/updatebook?id='+${book.id}}">update</a>
+				</td>
+				<td>
+					<a th:href="@{'/deletebook?id='+${book.id}}">delete</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<p th:if="${#lists.isEmpty(books)}">Ingen bøker funnet. </p>
+</body>
+</html>

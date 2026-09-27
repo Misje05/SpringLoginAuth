@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add New Book</title>
+</head>
+<body>
+	<div>
+		<div>
+			<a href="/">Home</a>
+		</div>
+		<form th:action="@{/addbook}" method="post" enctype="multipart/form-data">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<table>
+				<tr>
+					<td>ISBN:</td>
+					<td><input name="isbn" /></td>
+				</tr>
+				<tr>
+					<td>Title:</td>
+					<td><input name="title" /></td>
+				</tr>
+				<tr>
+					<td>Author:</td>
+					<td>
+						<select id="authorid" name="authorid">
+							<option th:each="author : ${authors}" 
+								th:value="${author.authorId}" 
+								th:text="${author.firstname} + ' ' + ${author.lastname}">
+							</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<div>
+				<input th:type="submit" value="Submit" name="submit">
+			</div>
+		</form>
+		
+	</div>
+
+</body>
+</html>
