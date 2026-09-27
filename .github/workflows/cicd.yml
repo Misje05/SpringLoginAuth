@@ -1,0 +1,100 @@
+name: CI/CD Pipeline
+
+on: 
+  push:
+    branches: [ "main" ]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
+        
+      - name: Compile with Maven
+        run: ./mvnw clean compile
+  
+  test:
+    runs-on: ubuntu-latest
+    name: unit tests 
+    needs: compile
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
+        
+      - name: Run Unit Tests
+        run: ./mvnw clean test      
+  
+  build:
+    runs-on: ubuntu-latest
+    name: build webapp
+    needs: test
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: Give execute permission to mvnw
+        run: chmod +x mvnw
+        
+      - name: Build Project [jar package]
+        run: ./mvnw clean package
+        
+      - name: Upload build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-dir
+          path: target/
+        
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy a jar package and run it
+    needs: build
+    
+    steps:       
+      - name: set up SSH Private key and Known_hosts
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          UBUNTU_HOST: ${{ secrets.UBUNTU_HOST }}
+          UBUNTU_USER: ${{ secrets.UBUNTU_USER }}
+        run: |
+         mkdir -p ~/.ssh
+         echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+         echo "${{ secrets.SSH_KNOWN_HOST }}" >> ~/.ssh/known_hosts
+         chmod 700 ~/.ssh
+         chmod 600 ~/.ssh/known_hosts
+         chmod 400 ~/.ssh/deploy_key
+      
+      - name: download build folder
+        uses: actions/download-artifact@v4
+        with:
+           name: app-dir
+           path: target/
+           
+      - name: Copy and Run deployed webapp jar
+        run: |
+         scp -i ~/.ssh/deploy_key target/*.jar ${{ secrets.UBUNTU_USER }}@${{ secrets.UBUNTU_HOST }}:~/webapp/springapp.jar
+         ssh -i ~/.ssh/deploy_key ${{ secrets.UBUNTU_USER }}@${{ secrets.UBUNTU_HOST }} /home/${{ secrets.UBUNTU_USER }}/run.sh
+        
+    
