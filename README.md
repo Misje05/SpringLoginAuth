@@ -1,6 +1,9 @@
 # Spring MVC Web Application
 
-A Spring Boot web application developed as part of my Web Services coursework at HVL. The project demonstrates server-side web development using Spring MVC, Thymeleaf, JPA and Spring Security.
+A Spring Boot web application developed as part of my Web Services coursework at HVL. The project demonstrates server-side web development using Spring MVC, Thymeleaf, JPA and Spring Security. It uses login, with authentication, authorization for user and admin access, and security for network and hosting configurations. Sorry but im not giving you the ip or port number :)
+
+<img width="542" height="581" alt="image" src="https://github.com/user-attachments/assets/bbd32119-b9ad-4071-868f-bbf1e62aaf5d" />
+
 
 ## Technologies
 
